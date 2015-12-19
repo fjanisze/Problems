@@ -1,0 +1,100 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include <array>
+#include <map>
+#include <stack>
+#include <queue>
+#include <sstream>
+#include <limits>
+using namespace std;
+
+namespace{
+    constexpr int inf = std::numeric_limits<int>::max()/2;
+    std::array<std::array<int,3001>,3001> data;
+    struct edge
+    {
+        int to{0};
+        int w{0};
+        edge(int dest,int we) : to{dest},w{we}{}
+        bool operator<(const edge& o) const
+        {
+            return w>o.w;
+        }
+    };
+}
+
+void data_clear()
+{
+    for(int i{0};i<3001;i++)
+        for(int j{0};j<3001;j++)
+            data[i][j] = 0;
+}
+
+int main() {
+    int n;
+    cin >> n;
+    std::stringstream ss;
+    while(n--)
+    {
+        data_clear();
+        int tv,te;
+        cin>>tv>>te;
+        while(te--){
+            int v1,v2,w;
+            cin>>v1>>v2>>w;
+            if(v1!=v2)
+                data[v1][v2] = data[v2][v1] = w;
+        }
+        int s;
+        cin>>s;
+        std::priority_queue<edge,std::vector<edge> > d;
+        std::map<int,int> dist;
+        for(int i{1};i<=tv;i++){
+            if(i!=s)
+                d.push(edge(i,inf));
+            else
+                d.push(edge(i,0));
+            dist[i] = inf;
+        }
+        dist[s] = 0;
+        while(!d.empty()){
+            edge cur = d.top();
+            cout<<cur.to<<" : "<<cur.w<<endl;
+            d.pop();
+            for(int i{1};i<=tv;i++){
+                if(i==cur.to) continue;
+                if(data[cur.to][i]>0){
+                    int w = dist[i];
+                    dist[i] = min(w,data[cur.to][i] + cur.w);
+                //    cout<<"->"<<i<<" : "<<data[cur.to][i] + cur.w<<", old: "<<w<<endl;
+                    if(w!=dist[i]){
+                        std::priority_queue<edge,std::vector<edge> > t;
+                        while(!d.empty()){
+                            edge c = d.top();
+                            d.pop();
+                            if(c.to==i){
+                                cout<<"Setting "<<i<<" to "<<dist[i]<<", old "<<c.w<<endl;
+                                c.w = dist[i];
+                            }
+                            t.push(c);
+                        }
+                        d = std::move(t);
+                    }
+                }
+            }
+        }
+        for(int i{1};i<=tv;i++){
+            if(i==s) continue;
+            if(dist[i]!=inf)
+                ss<<dist[i];
+            else ss<<"-1";
+            if(i<tv) ss<<" ";
+            else ss<<endl;
+        }
+    }
+    cout<<ss.str();
+    return 0;
+}
