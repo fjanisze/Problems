@@ -2,12 +2,15 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <map>
 using namespace std;
 
 long labyrinth[1001][1001];
-long conn_comp_size[500001];
+map<long,long> conn_comp_size;
 int mark{-1};
 int n,w;
+int used_marks[4];
+int marks_i{0};
 
 long dfs(int x,int y)
 {
@@ -21,8 +24,6 @@ long dfs(int x,int y)
 	if(y+1<n) r+=dfs(x,y+1);
 	return r;
 }
-int used_marks[4];
-int marks_i{0};
 
 bool try_to_mark(int pattern)
 {
@@ -47,6 +48,7 @@ int main()
 			labyrinth[i][j] = (s[j] == '.') ? 1 : 0;
 		}
 	}
+	//Mark each connected component size:
 	for(int i{0};i<n;i++)
 	{
 		for(int j{0};j<w;j++)
@@ -58,6 +60,7 @@ int main()
 			}
 		}
 	}
+	//Solve the problem:
 	for(int i{0};i<n;i++)
 	{
 		for(int j{0};j<w;j++)
