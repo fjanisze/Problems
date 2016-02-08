@@ -99,11 +99,7 @@ void bench(std::function<ll()> fnc,
 
 int main()
 {
-    cout.sync_with_stdio(false);
-
     data.resize(10000);
-    //Note, data starts with 0, but this is ignored.
-    //the allowed numbers are 1...n,
     std::iota(data.begin(),data.end(),0);
     num_of_elements = data.size()-1;
     max_k = 10;
