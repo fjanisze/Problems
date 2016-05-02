@@ -1,3 +1,4 @@
+//http://codeforces.com/problemset/problem/560/A
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -12,10 +13,15 @@ using namespace std;
 constexpr size_t min(size_t a,size_t b){ return a<b?a:b; }
 constexpr size_t max(size_t a,size_t b){ return a>b?a:b; }
 
-using ll = long long;
-
 int main()
 {
     ios_base::sync_with_stdio(false);
+    int n;
+    cin>>n;
+    vector<int> d(n);
+    fori(0,n) cin>>d[i];
+    sortv(d);
+    if(d[0]==1) cout<<"-1\n";
+    else cout<<"1\n";
     return 0;
 }

@@ -1,6 +1,8 @@
+//http://codeforces.com/problemset/problem/459/B
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <map>
 using namespace std;
 
 #define readi(start,end,data) for(size_t i{start};i<end;i++) cin>>data[i];
@@ -17,5 +19,23 @@ using ll = long long;
 int main()
 {
     ios_base::sync_with_stdio(false);
+    ll n;
+    cin>>n;
+    vector<ll> d(n);
+    fori(0,n) cin>>d[i];
+    sortv(d);
+    ll smaller{1},higher{1};
+    fori(1,n)
+        if(d[i]==d[i-1]) ++smaller;
+        else break;
+    for(ll i{n-2};i>=0;i--)
+        if(d[i]==d[i+1]) ++higher;
+        else break;
+    cout<<d.back()-d.front()<<" ";
+    if(d.front()==d.back())
+        cout<<(n*(n-1))/2<<endl;
+    else
+        cout<<smaller*higher<<endl;
     return 0;
 }
+

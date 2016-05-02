@@ -1,6 +1,8 @@
+//http://codeforces.com/problemset/problem/200/B
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <iomanip>
 using namespace std;
 
 #define readi(start,end,data) for(size_t i{start};i<end;i++) cin>>data[i];
@@ -12,10 +14,18 @@ using namespace std;
 constexpr size_t min(size_t a,size_t b){ return a<b?a:b; }
 constexpr size_t max(size_t a,size_t b){ return a>b?a:b; }
 
-using ll = long long;
-
 int main()
 {
     ios_base::sync_with_stdio(false);
+    int n;
+    cin>>n;
+    vector<int> d(n);
+    fori(0,n)
+        cin>>d[i];
+    long double fraction{0};
+    fori(0,n){
+        fraction+=d[i]/100.0;
+    }
+    cout<<setprecision(15)<<100*fraction/(long double)n<<endl;
     return 0;
 }
