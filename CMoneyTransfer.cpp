@@ -1,7 +1,9 @@
+//http://codeforces.com/problemset/problem/675/C
 #include <iostream>
 #include <vector>
 #include <algorithm>
 #include <utility>
+#include <map>
 using namespace std;
 
 
@@ -71,5 +73,15 @@ T pow(T n,T e){
 int main()
 {
     ios_base::sync_with_stdio(false);
+    get(n);
+    readv(0,n,data);
+    ll t{0},ans{0};
+    std::map<ll,ll> cnt;
+    fori(0,n-1){
+        t += data[i];
+        ans = max(ans,++cnt[t]);
+    }
+    cout<<n-ans<<endl;
     return 0;
 }
+

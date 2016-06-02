@@ -2,6 +2,8 @@
 #include <vector>
 #include <algorithm>
 #include <utility>
+#include <fstream>
+#include <random>
 using namespace std;
 
 
@@ -68,8 +70,57 @@ T pow(T n,T e){
 #define LogS(str)
 #endif
 
+ll nodes[100002];
+ll pointers[5*100005];
+
+/*
+int main()
+{
+    ofstream outfile("data.dat");
+    outfile << 90000;
+    random_device rd;
+    default_random_engine end(rd());
+    uniform_int_distribution<> dist(0,1000000);
+    fori(0,89999)
+    {
+        outfile<<dist(end)<<" ";
+    }
+    outfile<<endl;
+}*/
+
 int main()
 {
     ios_base::sync_with_stdio(false);
+    get(n);
+    ll value;
+    fori(0,5*100005)
+        pointers[i] = -1; //null pointers
+    pointers[0] = 0;
+    get(root);
+    nodes[0] = root;
+    ll pos,parent;
+    fori(1,n-1){
+        pos = 0;
+        parent = 0;
+        cin >> value;
+        nodes[i] = value;
+        while(pointers[pos]!=-1)
+        {
+            parent = pos;
+            if(value > nodes[pointers[pos]])
+                pos = 1 + pointers[parent]*2 + 1;
+            else
+                pos = 1 + pointers[parent]*2;
+        }
+        if(value > nodes[pointers[parent]]){
+            pointers[1 + pointers[parent]*2 + 1] = i;
+        }
+        else{
+            pointers[1 + pointers[parent]*2] = i;
+        }
+        cout<<nodes[pointers[parent]]<<" ";
+    }
+    cout<<endl;
     return 0;
 }
+

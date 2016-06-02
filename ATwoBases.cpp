@@ -1,3 +1,4 @@
+//http://codeforces.com/contest/602/problem/A
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -26,22 +27,22 @@ constexpr ld BIGLD{ std::numeric_limits<ld>::max() };
 constexpr ll LL10{ 10000000000 + 1 };
 
 template<typename t,typename t2>
-auto min(t&& a,t2&& b) -> decltype(a+b){ return a < b ? a : b; }
+auto min(t&& a,t2&& b) -> decltype(a+b){   return a < b ? a : b;   }
 
 template<typename t,typename t2>
-auto max(t&& a,t2&& b) -> decltype(a+b){ return a > b ? a : b; }
+auto max(t&& a,t2&& b) -> decltype(a+b){   return a > b ? a : b;   }
 
 template<typename N>
-N multimax_impl(N cur,N last)
+ll multimax_impl(ll cur,N last)
 {   return max(cur,last);   }
 
 template<typename N,typename...VALS>
-N multimax_impl(N cur,N n,VALS...vals)
+ll multimax_impl(ll cur,N n,VALS...vals)
 {   return multimax_impl(max(cur,n),vals...);   }
 
-template<typename N,typename...VALS>
-N multimax(N f,VALS...values)
-{   return multimax_impl(std::numeric_limits<N>::min(),f,values...); }
+template<typename...VALS>
+ll multimax(VALS...values)
+{   return multimax_impl(-BIGLL,values...); }
 
 template<typename T>
 T pow(T n,T e){
@@ -55,7 +56,6 @@ T pow(T n,T e){
 #define gets(var_name) std::string var_name; cin >> var_name;
 #define readv(start,end,vec_name) std::vector<ll> vec_name(end); for(size_t i{start};i<end;i++) cin>>vec_name[i];
 #define getpll(llp) std::cin>>llp.first>>llp.second;
-
 
 //specific for codeforces
 #ifndef ONLINE_JUDGE
@@ -71,5 +71,25 @@ T pow(T n,T e){
 int main()
 {
     ios_base::sync_with_stdio(false);
+    get(n1);
+    get(b1);
+    readv(0,n1,base1);
+    get(n2);
+    get(b2);
+    readv(0,n2,base2);
+    ll a{0},b{0};
+    fori(0,n1-1){
+        a += pow(b1,n1-i-1)*base1[i];
+    }
+    fori(0,n2-1){
+        b += pow(b2,n2-i-1)*base2[i];
+    }
+    if(a<b)
+        cout<<"<\n";
+    else if(a>b)
+        cout<<">\n";
+    else
+        cout<<"=\n";
     return 0;
 }
+
