@@ -1,3 +1,4 @@
+//http://codeforces.com/contest/665/problem/C
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -52,13 +53,6 @@ T pow(T n,T e){
     return r;
 }
 
-ll prime_factors(ll n,std::vector<ll>& data){
-    while(n%2==0){data.emplace_back(2);n/=2;}
-    for(ll i{3};i<=sqrt(n);i+=2){while(n%i==0){data.emplace_back(i);n/=i;}}
-    if(n>2) data.emplace_back(n);
-    return data.size();
-}
-
 #define get(var_name) ll var_name{0}; cin >> var_name;
 #define gets(var_name) std::string var_name; cin >> var_name;
 #define readv(start,end,vec_name) std::vector<ll> vec_name(end); for(size_t i{start};i<end;i++) cin>>vec_name[i];
@@ -76,8 +70,32 @@ ll prime_factors(ll n,std::vector<ll>& data){
 #define LogS(str)
 #endif
 
+char notsame(char a,char b)
+{
+    fori(0,26){
+        char ch = 'a'+i;
+        if(ch!=a && ch!=b)
+            return ch;
+    }
+    return 'a';//not possible
+}
+
 int main()
 {
     ios_base::sync_with_stdio(false);
+    std::string input;
+    cin >> input;
+    fori(1,input.size()-1){
+        if(input[i]==input[i-1] && input[i-1]!='.'){
+            input[i] = '.';
+        }
+    }
+    fori(1,input.size()-1)
+    {
+        if(input[i]=='.')
+            input[i] = notsame(input[i-1],((i+1>input.size()-1)?input[i-1]:input[i+1]));
+    }
+    cout<<input<<endl;
     return 0;
 }
+

@@ -1,9 +1,9 @@
+//https://www.hackerrank.com/contests/hourrank-9/challenges/mandragora
 #include <iostream>
 #include <vector>
 #include <algorithm>
 #include <utility>
 using namespace std;
-
 
 #define printv(data) for(auto& e:data) cout<<e<<","; cout<<endl;
 #define sortv(data) std::sort(data.begin(),data.end());
@@ -52,13 +52,6 @@ T pow(T n,T e){
     return r;
 }
 
-ll prime_factors(ll n,std::vector<ll>& data){
-    while(n%2==0){data.emplace_back(2);n/=2;}
-    for(ll i{3};i<=sqrt(n);i+=2){while(n%i==0){data.emplace_back(i);n/=i;}}
-    if(n>2) data.emplace_back(n);
-    return data.size();
-}
-
 #define get(var_name) ll var_name{0}; cin >> var_name;
 #define gets(var_name) std::string var_name; cin >> var_name;
 #define readv(start,end,vec_name) std::vector<ll> vec_name(end); for(size_t i{start};i<end;i++) cin>>vec_name[i];
@@ -79,5 +72,24 @@ ll prime_factors(ll n,std::vector<ll>& data){
 int main()
 {
     ios_base::sync_with_stdio(false);
+    get(t);
+    while(t--)
+    {
+        get(n);
+        readv(0,n,data);
+        if(n==1){
+            cout<<data.front()<<endl;
+            continue;
+        }
+        sortv(data);
+        ll ans{(n)*data.back()};
+        ll hsum{data.back()};
+        for(ll i{n-2};i>=0;i--){
+            hsum += data[i];
+            ll t = (i+1) * hsum;
+            ans = max(ans,t);
+        }
+        cout<<ans<<endl;
+    }
     return 0;
 }

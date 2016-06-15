@@ -1,3 +1,4 @@
+//http://codeforces.com/contest/629/problem/B
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -24,7 +25,6 @@ using vll = std::vector<ll>;
 constexpr ll BIGLL{ std::numeric_limits<ll>::max() };
 constexpr ld BIGLD{ std::numeric_limits<ld>::max() };
 constexpr ll LL10{ 10000000000 + 1 };
-constexpr ld pi = 3.141592653589793238462643383279502884;
 
 template<typename t,typename t2>
 auto min(t&& a,t2&& b) -> decltype(a+b){ return a < b ? a : b; }
@@ -52,13 +52,6 @@ T pow(T n,T e){
     return r;
 }
 
-ll prime_factors(ll n,std::vector<ll>& data){
-    while(n%2==0){data.emplace_back(2);n/=2;}
-    for(ll i{3};i<=sqrt(n);i+=2){while(n%i==0){data.emplace_back(i);n/=i;}}
-    if(n>2) data.emplace_back(n);
-    return data.size();
-}
-
 #define get(var_name) ll var_name{0}; cin >> var_name;
 #define gets(var_name) std::string var_name; cin >> var_name;
 #define readv(start,end,vec_name) std::vector<ll> vec_name(end); for(size_t i{start};i<end;i++) cin>>vec_name[i];
@@ -76,8 +69,38 @@ ll prime_factors(ll n,std::vector<ll>& data){
 #define LogS(str)
 #endif
 
+int time[367][4];
+
 int main()
 {
     ios_base::sync_with_stdio(false);
+    get(n);
+    fori(1,n){
+        char sex;
+        cin >> sex;
+        int start,stop;
+        cin >> start >> stop;
+        if(sex=='M'){
+            ++time[start][0];
+            ++time[stop+1][1];
+        }
+        else
+            ++time[start][2],
+            ++time[stop+1][3];
+    }
+    fori(1,366){
+        time[i][0] = time[i-1][0] + time[i][0] - time[i][1];
+        time[i][2] = time[i-1][2] + time[i][2] - time[i][3];
+    }
+    int maxf{0},maxm{0},best{0};
+    fori(1,366){
+        maxm = time[i][0];
+        maxf = time[i][2];
+        maxm = min(maxm,maxf)*2;
+        if(maxm > best)
+            best = maxm;
+    }
+    cout<<best<<endl;
     return 0;
 }
+

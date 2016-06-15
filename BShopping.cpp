@@ -1,7 +1,10 @@
+//http://codeforces.com/contest/665/problem/B
 #include <iostream>
 #include <vector>
 #include <algorithm>
 #include <utility>
+#include <iostream>
+#include <list>
 using namespace std;
 
 
@@ -52,13 +55,6 @@ T pow(T n,T e){
     return r;
 }
 
-ll prime_factors(ll n,std::vector<ll>& data){
-    while(n%2==0){data.emplace_back(2);n/=2;}
-    for(ll i{3};i<=sqrt(n);i+=2){while(n%i==0){data.emplace_back(i);n/=i;}}
-    if(n>2) data.emplace_back(n);
-    return data.size();
-}
-
 #define get(var_name) ll var_name{0}; cin >> var_name;
 #define gets(var_name) std::string var_name; cin >> var_name;
 #define readv(start,end,vec_name) std::vector<ll> vec_name(end); for(size_t i{start};i<end;i++) cin>>vec_name[i];
@@ -79,5 +75,33 @@ ll prime_factors(ll n,std::vector<ll>& data){
 int main()
 {
     ios_base::sync_with_stdio(false);
+    get(n);
+    get(m);
+    get(k);
+    std::list<long> items;
+    fori(1,k){
+        ll v;
+        cin >> v;
+        items.push_back(v);
+    }
+    ll ans{0};
+    fori(1,n){
+        readv(0,m,user);
+        for(auto e:user){
+            auto it = items.begin();
+            forj(1,k){
+                if(*it==e)
+                {
+                    ans += j;
+                    items.erase(it);
+                    items.push_front(e);
+                    break;
+                }
+                ++it;
+            }
+        }
+    }
+    cout<<ans<<endl;
     return 0;
 }
+

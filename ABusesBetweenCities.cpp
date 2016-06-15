@@ -1,7 +1,9 @@
+//http://codeforces.com/contest/665/problem/A
 #include <iostream>
 #include <vector>
 #include <algorithm>
 #include <utility>
+#include <set>
 using namespace std;
 
 
@@ -52,13 +54,6 @@ T pow(T n,T e){
     return r;
 }
 
-ll prime_factors(ll n,std::vector<ll>& data){
-    while(n%2==0){data.emplace_back(2);n/=2;}
-    for(ll i{3};i<=sqrt(n);i+=2){while(n%i==0){data.emplace_back(i);n/=i;}}
-    if(n>2) data.emplace_back(n);
-    return data.size();
-}
-
 #define get(var_name) ll var_name{0}; cin >> var_name;
 #define gets(var_name) std::string var_name; cin >> var_name;
 #define readv(start,end,vec_name) std::vector<ll> vec_name(end); for(size_t i{start};i<end;i++) cin>>vec_name[i];
@@ -76,8 +71,37 @@ ll prime_factors(ll n,std::vector<ll>& data){
 #define LogS(str)
 #endif
 
+long getnum()
+{
+    long num{0};
+    char ch;
+    cin >> ch;
+    num += (ch-'0')*10;
+    cin >> ch;
+    num += (ch-'0');
+    return num;
+}
+
 int main()
 {
     ios_base::sync_with_stdio(false);
+    get(astart);
+    get(atravel);
+    get(bstart);
+    get(btravel);
+    long start_time{0};
+    start_time = getnum() * 60;
+    char ch;
+    cin >> ch;
+    start_time += getnum();
+
+    long bstart_time = 5*60;
+    long ans{0};
+    for(;bstart_time<1440;bstart_time+=bstart){
+        if(bstart_time+btravel>start_time && bstart_time<start_time+atravel)
+            ++ans;
+    }
+    cout<<ans<<endl;
     return 0;
 }
+
