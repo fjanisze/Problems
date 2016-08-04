@@ -1,9 +1,8 @@
-//http://codeforces.com/contest/680/problem/C
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include <map>
 #include <utility>
+#include <queue>
 using namespace std;
 
 
@@ -54,6 +53,13 @@ T pow(T n,T e){
     return r;
 }
 
+ll prime_factors(ll n,std::vector<ll>& data){
+    while(n%2==0){data.emplace_back(2);n/=2;}
+    for(ll i{3};i<=sqrt(n);i+=2){while(n%i==0){data.emplace_back(i);n/=i;}}
+    if(n>2) data.emplace_back(n);
+    return data.size();
+}
+
 #define get(var_name) ll var_name{0}; cin >> var_name;
 #define gets(var_name) std::string var_name; cin >> var_name;
 #define readv(start,end,vec_name) std::vector<ll> vec_name(end); for(size_t i{start};i<end;i++) cin>>vec_name[i];
@@ -71,21 +77,24 @@ T pow(T n,T e){
 #define LogS(str)
 #endif
 
-int primes[] = {2, 3, 4, 5, 7,9, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47};
-int cnt;
-
 int main()
 {
     ios_base::sync_with_stdio(false);
-    string resp;
-    fori(0,20){
-        cout<<primes[i]<<endl<<flush;
-        cin >> resp;
-        if(resp=="yes") ++cnt;
+    get(n);
+    std::priority_queue<ll, std::vector<ll>, std::greater<ll> > data;
+    ll t;
+    fori(1,n){
+        cin >> t;
+        data.push(t);
     }
-    if(cnt>1)
-        cout<<"composite\n";
-    else
-        cout<<"prime\n";
+    ll ans{1};
+    while(!data.empty())
+    {
+        ll cur = data.top();
+        data.pop();
+        if(cur>=ans)
+            ++ans;
+    }
+    cout<<ans<<endl;
     return 0;
 }
