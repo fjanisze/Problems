@@ -76,9 +76,3 @@ ll prime_factors(ll n,std::vector<ll>& data){
 #define LogN(num)
 #define LogS(str)
 #endif
-
-int main()
-{
-    ios_base::sync_with_stdio(false);
-    return 0;
-}
