@@ -45,6 +45,19 @@ template<typename N,typename...VALS>
 N multimax(N f,VALS...values)
 {   return multimax_impl(std::numeric_limits<N>::min(),f,values...); }
 
+template<typename N>
+N multimin_impl(N cur,N last)
+{   return min(cur,last);   }
+
+template<typename N,typename...VALS>
+N multimin_impl(N cur,N n,VALS...vals)
+{   return multimin_impl(min(cur,n),vals...);   }
+
+template<typename N,typename...VALS>
+N multimin(N f,VALS...values)
+{   return multimin_impl(std::numeric_limits<N>::max(),f,values...); }
+
+
 template<typename T>
 T pow(T n,T e){
     T r{1};
