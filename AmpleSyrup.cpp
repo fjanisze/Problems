@@ -1,10 +1,8 @@
 //From code Jam, Problem A. Ample Syrup
-//Works only for the small input set
 #include <iostream>
 #include <vector>
 #include <algorithm>
 #include <iomanip>
-#include <set>
 using namespace std;
 
 constexpr long double pi = 3.141592653589793238462643383279502884;
